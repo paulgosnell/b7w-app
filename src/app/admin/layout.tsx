@@ -54,6 +54,36 @@ export default async function AdminLayout({
         </div>
       </header>
 
+      {/* Week Progress Bar */}
+      {meta && (
+        <div className="border-b border-gray-800 bg-gray-900/30">
+          <div className="max-w-7xl mx-auto px-4 py-3">
+            <div className="flex items-center gap-2">
+              {Array.from({ length: meta.total_weeks || 10 }, (_, i) => i + 1).map(week => {
+                const isCurrent = week === meta.current_week
+                const isPast = week < (meta.current_week || 1)
+                return (
+                  <div key={week} className="flex-1 flex flex-col items-center gap-1">
+                    <div
+                      className={`w-full h-2 rounded-full transition-colors ${
+                        isCurrent
+                          ? 'bg-purple-500'
+                          : isPast
+                          ? 'bg-green-500'
+                          : 'bg-gray-700'
+                      }`}
+                    />
+                    <span className={`text-xs ${isCurrent ? 'text-purple-400 font-medium' : 'text-gray-500'}`}>
+                      {week}
+                    </span>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Navigation */}
       <nav className="border-b border-gray-800 bg-gray-900/50">
         <div className="max-w-7xl mx-auto px-4">
