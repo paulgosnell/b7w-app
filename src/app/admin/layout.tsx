@@ -8,7 +8,13 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode
 }) {
-  const supabase = await createClient()
+  let supabase
+  try {
+    supabase = await createClient()
+  } catch {
+    redirect('/login')
+  }
+
   const { data: { user } } = await supabase.auth.getUser()
 
   if (!user) {
