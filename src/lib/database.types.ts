@@ -77,6 +77,7 @@ export type Database = {
           content: string
           created_at: string | null
           id: string
+          image_urls: string[] | null
           parent_id: string | null
           related_changelog_id: string | null
           related_story_id: string | null
@@ -88,6 +89,7 @@ export type Database = {
           content: string
           created_at?: string | null
           id?: string
+          image_urls?: string[] | null
           parent_id?: string | null
           related_changelog_id?: string | null
           related_story_id?: string | null
@@ -99,6 +101,7 @@ export type Database = {
           content?: string
           created_at?: string | null
           id?: string
+          image_urls?: string[] | null
           parent_id?: string | null
           related_changelog_id?: string | null
           related_story_id?: string | null

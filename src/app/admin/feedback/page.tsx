@@ -76,6 +76,21 @@ export default async function FeedbackPage() {
                 </div>
                 <p className="text-gray-300 whitespace-pre-wrap">{item.content}</p>
 
+                {/* Images */}
+                {item.image_urls && item.image_urls.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mt-3">
+                    {item.image_urls.map((url: string, idx: number) => (
+                      <a key={idx} href={url} target="_blank" rel="noopener noreferrer">
+                        <img
+                          src={url}
+                          alt={`Attachment ${idx + 1}`}
+                          className="max-w-xs max-h-48 object-cover rounded-lg border border-gray-700 hover:border-purple-500 transition-colors"
+                        />
+                      </a>
+                    ))}
+                  </div>
+                )}
+
                 {/* Actions */}
                 <FeedbackActions
                   feedbackId={item.id}
@@ -101,6 +116,20 @@ export default async function FeedbackPage() {
                         </span>
                       </div>
                       <p className="text-gray-300 text-sm whitespace-pre-wrap">{reply.content}</p>
+                      {/* Reply Images */}
+                      {reply.image_urls && reply.image_urls.length > 0 && (
+                        <div className="flex flex-wrap gap-2 mt-2">
+                          {reply.image_urls.map((url: string, idx: number) => (
+                            <a key={idx} href={url} target="_blank" rel="noopener noreferrer">
+                              <img
+                                src={url}
+                                alt={`Attachment ${idx + 1}`}
+                                className="max-w-xs max-h-32 object-cover rounded-lg border border-gray-700 hover:border-purple-500 transition-colors"
+                              />
+                            </a>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>
