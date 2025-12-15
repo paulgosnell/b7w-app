@@ -53,6 +53,17 @@ export default async function AdminLayout({
               )}
             </div>
             <div className="flex items-center gap-4">
+              <a
+                href="https://platform-p0stman.vercel.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-3 py-1.5 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium rounded-lg transition-colors flex items-center gap-2"
+              >
+                Open BeingNex
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </a>
               <span className="text-sm text-gray-400">{user.email}</span>
               <LogoutButton />
             </div>
