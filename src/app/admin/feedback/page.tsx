@@ -3,17 +3,31 @@ import { FeedbackTypeBadge } from '@/components/TypeBadge'
 import { StatusBadge } from '@/components/StatusBadge'
 import { FeedbackForm } from './FeedbackForm'
 import { FeedbackActions } from './FeedbackActions'
+import { FeedbackTabs } from './FeedbackTabs'
 
-export default async function FeedbackPage() {
+export default async function FeedbackPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ status?: string }>
+}) {
+  const params = await searchParams
+  const statusFilter = params.status || 'open'
+
   const supabase = await createClient()
 
   const { data: { user } } = await supabase.auth.getUser()
 
-  const { data: feedback } = await supabase
+  // Get all feedback for counts
+  const { data: allFeedback } = await supabase
     .from('feedback')
     .select('*')
-    .is('parent_id', null) // Only top-level feedback
+    .is('parent_id', null)
     .order('created_at', { ascending: false })
+
+  // Filter based on status
+  const feedback = statusFilter === 'all'
+    ? allFeedback
+    : allFeedback?.filter(f => f.status === statusFilter)
 
   const { data: replies } = await supabase
     .from('feedback')
@@ -32,18 +46,22 @@ export default async function FeedbackPage() {
     }
   })
 
-  const openCount = feedback?.filter(f => f.status === 'open').length || 0
-  const resolvedCount = feedback?.filter(f => f.status === 'resolved').length || 0
+  // Calculate counts
+  const counts = {
+    all: allFeedback?.length || 0,
+    open: allFeedback?.filter(f => f.status === 'open').length || 0,
+    acknowledged: allFeedback?.filter(f => f.status === 'acknowledged').length || 0,
+    resolved: allFeedback?.filter(f => f.status === 'resolved').length || 0,
+  }
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Feedback</h1>
-        <div className="flex items-center gap-4 text-sm">
-          <span className="text-blue-400">{openCount} open</span>
-          <span className="text-green-400">{resolvedCount} resolved</span>
-        </div>
       </div>
+
+      {/* Filter Tabs */}
+      <FeedbackTabs counts={counts} />
 
       {/* New Feedback Form */}
       <FeedbackForm userEmail={user?.email || 'anonymous'} />
