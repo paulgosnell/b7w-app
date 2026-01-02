@@ -54,7 +54,7 @@ export default async function AdminLayout({
             </div>
             <div className="flex items-center gap-4">
               <a
-                href="https://platform-p0stman.vercel.app"
+                href="https://beingnex.p0stman.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-3 py-1.5 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium rounded-lg transition-colors flex items-center gap-2"
